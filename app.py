@@ -1,15 +1,16 @@
 import streamlit as st
-import os
 
 from rag.ingestion import get_pdf_text, get_text_chunks
 from rag.vectorstore import get_vector_store, load_vector_store
+from rag.reranker import rerank_ans
 from rag.qa import get_conversation_chain
 from utils.config import FAISS_PATH 
 
 def user_input(user_question):
 
     db = load_vector_store()
-    docs = db.similarity_search(user_question, k=5)
+    init_docs = db.similarity_search(user_question, k=10)
+    docs = rerank_ans(user_question, init_docs, top_k=3)
 
     chain = get_conversation_chain()
 
@@ -18,11 +19,19 @@ def user_input(user_question):
     st.subheader("Reply")
     st.write(response['output_text'])
 
-    with st.expander("Retrieved context"):
+    with st.expander("Retrieved context (before rerank)"):
+        for i, doc in enumerate(init_docs):
+            st.markdown(f"**Chunk {i}**")
+            st.write(doc.page_content[:100])
+            st.write(f"Source: {doc.metadata}")
+            st.divider()
+    
+    with st.expander("Retrieved context (after rerank)"):
         for i, doc in enumerate(docs):
             st.markdown(f"**Chunk {i}**")
             st.write(doc.page_content[:100])
             st.write(f"Source: {doc.metadata}")
+            st.divider()
 
 def main():
     st.set_page_config("Chat with Multiple PDF")
