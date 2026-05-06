@@ -1,14 +1,16 @@
+## RAG-based PDF Question Answering System (with Reranking)
+
 ### Overview
 This project implements a Retrieval-Augmented Generation (RAG) system that allows users to upload multiple PDF documents and ask questions based on their content.  
-The system retrieves relevant document chunks using vector search and generates grounded answers using a large language model (Gemini).
+The system retrieves relevant document chunks using vector search (FAISS) and improves retrieval quality using an additional LLM-based reranking step, before generating grounded answers with Google Gemini.
 
 ### System Architecture
 ```text
 User Query
     ↓
-Vector Search (FAISS)
+Vector Search (FAISS - top 10)
     ↓
-Top-k Relevant Chunks
+Reranking (select top 3)
     ↓
 LLM (Gemini)
     ↓
