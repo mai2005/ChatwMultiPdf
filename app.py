@@ -9,7 +9,7 @@ from utils.config import FAISS_PATH
 def user_input(user_question):
 
     db = load_vector_store()
-    init_docs = db.similarity_search(user_question, k=3)
+    init_docs = db.similarity_search(user_question, k=5)
     docs = rerank_ans(user_question, init_docs)
 
     chain = get_conversation_chain()
@@ -22,14 +22,14 @@ def user_input(user_question):
     with st.expander("Retrieved context (before rerank)"):
         for i, doc in enumerate(init_docs):
             st.markdown(f"**Chunk {i}**")
-            st.write(doc.page_content[:100])
+            st.write(doc.page_content[:500])
             st.write(f"Source: {doc.metadata}")
             st.divider()
     
     with st.expander("Retrieved context (after rerank)"):
         for i, doc in enumerate(docs):
             st.markdown(f"**Chunk {i}**")
-            st.write(doc.page_content[:100])
+            st.write(doc.page_content[:500])
             st.write(f"Source: {doc.metadata}")
             st.divider()
 
