@@ -1,7 +1,7 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from utils.config import LLM_MODEL, GOOGLE_API_KEY
 
-def rerank_ans(question, docs, top_k=3):
+def rerank_ans(question, docs, top_k=1):
     llm = ChatGoogleGenerativeAI(model=LLM_MODEL, temperature=0, google_api_key=GOOGLE_API_KEY)
     context = ""
     for i, doc in enumerate(docs):
