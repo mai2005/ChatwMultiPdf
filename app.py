@@ -9,8 +9,8 @@ from utils.config import FAISS_PATH
 def user_input(user_question):
 
     db = load_vector_store()
-    init_docs = db.similarity_search(user_question, k=10)
-    docs = rerank_ans(user_question, init_docs, top_k=3)
+    init_docs = db.similarity_search(user_question, k=3)
+    docs = rerank_ans(user_question, init_docs)
 
     chain = get_conversation_chain()
 
