@@ -30,3 +30,5 @@ Return ONLY the document numbers (e.g., 0,2,3)
         selected_indices = list(range(top_k))
 
     reranked_docs = [docs[i] for i in selected_indices if i < len(docs)]
+
+    return reranked_docs
