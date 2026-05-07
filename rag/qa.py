@@ -25,5 +25,5 @@ def get_conversation_chain():
     
     model = ChatGoogleGenerativeAI(model=LLM_MODEL, temperature=0.3, google_api_key=GOOGLE_API_KEY)
     prompt = PromptTemplate(template=prompt_template, input_variables=['context', 'question'])
-    chain = load_qa_chain(model=model, chain_type='stuff', prompt=prompt)
+    chain = load_qa_chain(llm=model, chain_type='stuff', prompt=prompt)
     return chain
