@@ -21,14 +21,12 @@ def user_input(user_question):
 
     with st.expander("Retrieved context (before rerank)"):
         for i, doc in enumerate(init_docs):
-            st.markdown(f"**Chunk {i}**")
             st.write(doc.page_content[:500])
             st.write(f"Source: {doc.metadata}")
             st.divider()
     
     with st.expander("Retrieved context (after rerank)"):
         for i, doc in enumerate(docs):
-            st.markdown(f"**Chunk {i}**")
             st.write(doc.page_content[:500])
             st.write(f"Source: {doc.metadata}")
             st.divider()
