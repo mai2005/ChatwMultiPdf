@@ -8,9 +8,9 @@ The system retrieves relevant document chunks using vector search (FAISS) and im
 ```text
 User Query
     ↓
-Vector Search (FAISS - top 3)
+Vector Search (FAISS - top 5)
     ↓
-Reranking 
+Reranking (select top 3)
     ↓
 LLM (Gemini)
     ↓
